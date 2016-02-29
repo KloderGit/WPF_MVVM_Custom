@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 
 namespace WPF_MVVM_Custom
 {
@@ -13,5 +7,14 @@ namespace WPF_MVVM_Custom
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            var mw = new View.MainWindow
+            {
+                DataContext = new ViewModel.MainViewModel()
+            };
+
+            mw.Show();
+        }
     }
 }
