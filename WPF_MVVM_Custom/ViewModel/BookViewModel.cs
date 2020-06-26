@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace WPF_MVVM_Custom.ViewModel
 {
-    public class BookViewModel:ViewModelBase
+    public class BookViewModel : ViewModelBase
     {
         public Model.Book Book;
 
@@ -43,8 +44,55 @@ namespace WPF_MVVM_Custom.ViewModel
                 Book.Count = value;
                 OnPropertyChanged("Count");
             }
+
         }
 
-        
+        // -----------------------------------------------------
+
+        private Command.RelayCommand getItemCommand;
+
+        public ICommand GetItemCommand
+        {
+            get
+            {
+                if (getItemCommand == null)
+                {
+                    getItemCommand = new Command.RelayCommand(()=>GetItem());
+                }
+                return getItemCommand;
+            }
+        }
+
+
+        private Command.RelayCommand giveItemCommand;
+
+        public ICommand GiveItemCommand
+        {
+            get
+            {
+                if (giveItemCommand == null)
+                {
+                    giveItemCommand = new Command.RelayCommand(GiveItem, CanGiveItem);
+                }
+                return giveItemCommand;
+            }
+        }
+
+        private void GetItem()
+        {
+            Count++;
+        }
+
+        private void GiveItem()
+        {
+            Count--;
+        }
+
+        private bool CanGiveItem()
+        {
+            return Count > 0;
+        }
+
+
     }
 }
